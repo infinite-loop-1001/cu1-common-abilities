@@ -9,8 +9,10 @@ common-abilities
 ├── pom.xml                    # 根聚合 POM（packaging=pom）
 ├── common-dependencies
 │   └── pom.xml                # BOM：统一管理第三方依赖版本
-└── common-parent
-    └── pom.xml                # Parent POM：统一管理插件版本和构建行为
+├── common-parent
+│   └── pom.xml                # Parent POM：统一管理插件版本和构建行为
+└── common-apollo
+    └── pom.xml                # Apollo 通用扩展组件
 ```
 
 ### 模块说明
@@ -27,6 +29,10 @@ common-abilities
   - 打包行为（Spring Boot Repackage、Maven Shade、Git Commit ID）
   - 资源过滤规则（`application*.yml/yaml/properties`）
 - **使用方式**：业务项目直接 `<parent>` 指向 `common-parent`。
+
+#### 3. `common-apollo`
+- **作用**：Apollo 的通用 Spring Boot 扩展模块。当前提供 `@ApolloStaticValue`，用于将 Apollo 配置绑定到 Spring Bean 中的 `static` 字段，并在配置变更后自动刷新。
+- **Namespace**：通过 `apollo.bootstrap.namespaces` 监听已加载的 Namespace；业务代码只需要声明配置 key，不需要感知 Namespace。
 
 ## 快速开始
 
@@ -77,6 +83,36 @@ common-abilities
 ```
 
 这样可同时获得 **版本管理** 和 **统一构建配置**。
+
+### 3. 使用 Apollo 静态配置热更新
+
+业务项目引入本模块：
+
+```xml
+<dependency>
+    <groupId>cn.cu1universe</groupId>
+    <artifactId>common-apollo</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
+
+将需要热更新的字段声明在 Spring Bean 中：
+
+```java
+import cn.cu1universe.apollo.annotation.ApolloStaticValue;
+
+@Component
+public class AppConfig {
+
+    @ApolloStaticValue("${app.transfer-url:http://localhost:8080}")
+    public static String transferUrl;
+
+    @ApolloStaticValue("${movie.api.timeout:5000}")
+    public static int movieTimeout;
+}
+```
+
+配置 `apollo.bootstrap.namespaces=application,movie-shared` 后，上述字段会从 Spring `Environment` 读取初始值，并监听这两个 Namespace 的配置变化。注解仅支持非 `final` 的 `static` 字段，且每个注解必须只包含一个 Spring 占位符。
 
 ## 核心技术栈版本
 

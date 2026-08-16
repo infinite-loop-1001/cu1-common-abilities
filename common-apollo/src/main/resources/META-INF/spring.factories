@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cn.cu1universe.apollo.autoconfigure.ApolloAutoConfiguration
