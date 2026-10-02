@@ -1,11 +1,11 @@
-package cn.cu1universe.apollo.processor;
+package link.cu1universe.dev.apollo.processor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.ctrip.framework.apollo.enums.PropertyChangeType;
 import com.ctrip.framework.apollo.model.ConfigChange;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
-import cn.cu1universe.apollo.annotation.ApolloStaticValue;
+import link.cu1universe.dev.apollo.annotation.ApolloStaticValue;
 import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

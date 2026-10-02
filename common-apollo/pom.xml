@@ -3,17 +3,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.cu1universe</groupId>
+    <parent>
+        <groupId>link.cu1universe.dev</groupId>
+        <artifactId>common-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../common-parent/pom.xml</relativePath>
+    </parent>
+
     <artifactId>common-apollo</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>common-apollo</name>
     <description>Reusable Spring Boot extensions for Apollo</description>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>central</id>
+            <name>Central Portal Snapshots</name>
+            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
-        <!-- Java 8 bytecode remains usable by both Spring Boot 2 and Spring Boot 3 applications. -->
-        <maven.compiler.release>8</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
 
         <!-- Compile against the oldest supported Spring Boot API; consumers supply their own runtime version. -->
         <apollo-client.version>2.1.0</apollo-client.version>
@@ -21,8 +33,6 @@
         <spring-boot.version>2.6.6</spring-boot.version>
         <slf4j.version>1.7.36</slf4j.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
     </properties>
 
     <dependencies>
@@ -60,19 +70,33 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
-                <configuration>
+                <!-- This library does not use the parent's Lombok/MapStruct processors. -->
+                <configuration combine.self="override">
                     <release>${maven.compiler.release}</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <parameters>true</parameters>
+                    <proc>none</proc>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <!-- A reusable library has no application entry point. -->
+                <configuration combine.self="override"/>
             </plugin>
         </plugins>
     </build>

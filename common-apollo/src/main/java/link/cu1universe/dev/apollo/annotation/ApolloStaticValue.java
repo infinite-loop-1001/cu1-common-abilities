@@ -1,4 +1,4 @@
-package cn.cu1universe.apollo.annotation;
+package link.cu1universe.dev.apollo.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

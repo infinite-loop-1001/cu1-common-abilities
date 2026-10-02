@@ -6,8 +6,8 @@
 
 - `pom.xml`：根聚合 POM，维护共享依赖版本和默认构建插件。
 - `common-dependencies/pom.xml`：依赖 BOM。在此集中新增或更新受管依赖版本。
-- `common-parent/pom.xml`：可复用父 POM，导入 `common-dependencies` 并集中管理插件与资源过滤配置。
-- `common-apollo/`：Apollo 配置增强组件，提供静态字段配置刷新与自动配置。
+- `common-parent/pom.xml`：可复用父 POM，继承 `common-dependencies` 并集中管理插件与资源过滤配置。
+- `common-apollo/`：继承 `common-parent` 的 Apollo 配置增强组件，提供静态字段配置刷新与自动配置，使用 Java 17 编译并按子模块发布。
 - `README.md` 和 `LICENSE`：仓库级文档与许可文件。
 
 依赖版本必须集中维护在相应 POM 的 `properties` 区块。消费者通过导入 `common-dependencies` 获取版本管理，或继承 `common-parent` 获取构建约定。

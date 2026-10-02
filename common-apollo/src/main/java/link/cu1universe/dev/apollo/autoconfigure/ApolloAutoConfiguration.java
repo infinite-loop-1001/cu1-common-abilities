@@ -1,12 +1,11 @@
-package cn.cu1universe.apollo.autoconfigure;
+package link.cu1universe.dev.apollo.autoconfigure;
 
-import cn.cu1universe.apollo.processor.ApolloStaticValueProcessor;
+import link.cu1universe.dev.apollo.processor.ApolloStaticValueProcessor;
 import com.ctrip.framework.apollo.spring.annotation.ApolloAnnotationProcessor;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

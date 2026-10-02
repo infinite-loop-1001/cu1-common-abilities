@@ -1,11 +1,11 @@
-package cn.cu1universe.apollo.processor;
+package link.cu1universe.dev.apollo.processor;
 
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigService;
 import com.ctrip.framework.apollo.model.ConfigChange;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.property.PlaceholderHelper;
-import cn.cu1universe.apollo.annotation.ApolloStaticValue;
+import link.cu1universe.dev.apollo.annotation.ApolloStaticValue;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.LinkedHashSet;
